@@ -2,84 +2,85 @@
 
   $nav_selected = "SCANNER"; 
   $left_buttons = "YES"; 
-  $left_selected = "RELEASESGANTT"; 
+  $left_selected = "RELEASESLIST"; 
 
   include("./nav.php");
   global $db;
 
   ?>
-<!DOCTYPE HTML>
-<html>
-<head>
 
 
 <div class="right-content">
     <div class="container">
 
       <h3 style = "color: #01B0F1;">Scanner -> System Releases Gantt</h3>
-         <h3><img src="images/releases_gantt.png" style="max-height: 35px;" />System Releases Gantt</h3>
-         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-         <script type="text/javascript">
+
+        <h3><img src="images/gantt.png" style="max-height: 35px;" />System Releases Gantt</h3>
+
+
+
+
+
+<html>
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
     google.charts.load('current', {'packages':['gantt']});
     google.charts.setOnLoadCallback(drawChart);
- function drawChart() {
-        
-        TODO: Gantt Chart Code
-        <?php
 
-$sql = "SELECT * from releases ORDER BY id ASC, ORDER BY open_date ASC, ORDER BY rtm_date ASC;";
-$result = $db->query($sql);       
+    function drawChart() {
 
-                if ($result->num_rows > 0) {
-                  // output data of each row
-                 while($row = $result->fetch_assoc()) {
-                     echo '<tr>
-                              <td>'.$row["id"].'</td>
-                              <td>'.$row["name"].' </span> </td>
-                              <td>'.$row["type"].'</td>
-                              <td>'.$row["status"].'</td>
-                              <td>'.$row["open_date"].' </span> </td>
-                              <td>'.$row["dependency_date"].'</td>
-                              <td>'.$row["freeze_date"].'</td>
-                              <td>'.$row["rtm_date"].' </span> </td>
-                              <td>'.$row["manager"].' </span> </td>
-                              <td>'.$row["author"].' </span> </td>
-                              <td>'.$row["app_id"].' </span> </td>
-                          </tr>';
-                  }//end while
-              }//end if
-              else {
-                  echo "0 results";
-                }//end else
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('string', 'Resource');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
 
-                  $result->close();
-                ?>
- var data = google.visualization.arrayToDataTable([
+      data.addRows([
+        ['2014Spring', 'Spring 2014', 'spring',
+         new Date(2014, 2, 22), new Date(2014, 5, 20), null, 100, null],
+        ['2014Summer', 'Summer 2014', 'summer',
+         new Date(2014, 5, 21), new Date(2014, 8, 20), null, 100, null],
+        ['2014Autumn', 'Autumn 2014', 'autumn',
+         new Date(2014, 8, 21), new Date(2014, 11, 20), null, 100, null],
+        ['2014Winter', 'Winter 2014', 'winter',
+         new Date(2014, 11, 21), new Date(2015, 2, 21), null, 100, null],
+        ['2015Spring', 'Spring 2015', 'spring',
+         new Date(2015, 2, 22), new Date(2015, 5, 20), null, 50, null],
+        ['2015Summer', 'Summer 2015', 'summer',
+         new Date(2015, 5, 21), new Date(2015, 8, 20), null, 0, null],
+        ['2015Autumn', 'Autumn 2015', 'autumn',
+         new Date(2015, 8, 21), new Date(2015, 11, 20), null, 0, null],
+        ['2015Winter', 'Winter 2015', 'winter',
+         new Date(2015, 11, 21), new Date(2016, 2, 21), null, 0, null],
+        ['Football', 'Football Season', 'sports',
+         new Date(2014, 8, 4), new Date(2015, 1, 1), null, 100, null],
+        ['Baseball', 'Baseball Season', 'sports',
+         new Date(2015, 2, 31), new Date(2015, 9, 20), null, 14, null],
+        ['Basketball', 'Basketball Season', 'sports',
+         new Date(2014, 9, 28), new Date(2015, 5, 20), null, 86, null],
+        ['Hockey', 'Hockey Season', 'sports',
+         new Date(2014, 9, 8), new Date(2015, 5, 21), null, 89, null]
+      ]);
 
- ]);
-
-  var options = {
+      var options = {
         height: 400,
         gantt: {
           trackHeight: 30
         }
       };
 
-  var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
- chart.draw(data,options);
- }
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
   </script>
-
-
-
-  <?php include("./footer.php"); ?>
-
-  
 </head>
 <body>
- <div class="container-fluid">
- <div id="chart_div"></div>
- </div>
- 
+  <div id="chart_div"></div>
 </body>
 </html>
