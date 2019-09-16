@@ -44,7 +44,7 @@
 
          <?php
 
-$sql = "SELECT id,name,type,open_date,rtm_date,UNIX_TIMESTAMP(rtm_date)-UNIX_TIMESTAMP(open_date) AS duration from releases ORDER BY open_date ASC;";
+$sql = "SELECT id,name,type,open_date,rtm_date,(rtm_date)-(open_date) AS duration from releases ORDER BY open_date ASC;";
 $result = $db->query($sql);
 
                 if ($result->num_rows > 0) {
