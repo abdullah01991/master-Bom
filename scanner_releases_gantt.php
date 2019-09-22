@@ -3,7 +3,7 @@
   $nav_selected = "SCANNER"; 
   $left_buttons = "YES"; 
   $left_selected = "RELEASESLIST"; 
-
+  $date = "open_date";
   include("./nav.php");
   global $db;
 
@@ -44,7 +44,7 @@
 
          <?php
 
-$sql = "SELECT id,name,type,open_date,rtm_date,(rtm_date)-(open_date) AS duration from releases ORDER BY open_date ASC;";
+$sql = "SELECT id,name,type,DATE_FORMAT($date,'%Y,%m,%e') AS start_d,DATE_FORMAT(rtm_date, '%Y,%m,%e') AS end_d,(rtm_date)-($date) AS duration from releases ORDER BY $date ASC;";
 $result = $db->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -53,8 +53,8 @@ $result = $db->query($sql);
                         echo '["'.$row["id"].'","'
                                  .$row["name"].'","'
                                  .$row["type"].'", new Date('
-                                 .$row["open_date"].'), new Date('
-                                 .$row["rtm_date"].'),'
+                                 .$row["start_d"].'), new Date('
+                                 .$row["end_d"].'),'
                                  .$row["duration"].',null,null],';
                     }//end while
                 }//end if
