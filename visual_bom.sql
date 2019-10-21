@@ -21,13 +21,14 @@ SET time_zone = "+00:00";
 --
 -- Database: `bom`
 --
-
+USE `bom`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `releases`
 --
 
+DROP TABLE `releases`; 
 CREATE TABLE `releases` (
   `id` varchar(15) NOT NULL COMMENT 'release identifier',
   `name` varchar(100) NOT NULL,
@@ -69,6 +70,7 @@ INSERT INTO `releases` (`id`, `name`, `type`, `status`, `open_date`, `dependency
 -- Table structure for table `sbom`
 --
 
+DROP TABLE `sbom`; 
 CREATE TABLE `sbom` (
   `row_id` int(6) NOT NULL,
   `app_id` varchar(15) NOT NULL,
@@ -80,6 +82,10 @@ CREATE TABLE `sbom` (
   `cmp_type` varchar(15) NOT NULL,
   `app_status` varchar(15) NOT NULL,
   `cmp_status` varchar(15) NOT NULL,
+  `request_id` varchar(15) DEFAULT NULL,
+  `request_date` date DEFAULT NULL,
+  `request_status` varchar(15) DEFAULT NULL,
+  `request_step` varchar(30) DEFAULT NULL,
   `notes` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -87,25 +93,25 @@ CREATE TABLE `sbom` (
 -- Dumping data for table `sbom`
 --
 
-INSERT INTO `sbom` (`row_id`, `app_id`, `app_name`, `app_version`, `cmp_id`, `cmp_name`, `cmp_version`, `cmp_type`, `app_status`, `cmp_status`, `notes`) VALUES
-(1, 'BOM-100', 'QuizMaster', '1.1', '101.1', 'DB_Layer', '2.3', 'internal', 'released', 'released', ''),
-(2, 'BOM-100', 'QuizMaster', '1.1', '101.2', 'Jquery', '4.3', 'open source', 'released', 'approved', 'open source, no commercial support'),
-(3, 'BOM-100', 'QuizMaster', '1.1', '101.3', 'Bootstrap', '8.5.c', 'open source', 'released', 'pending', ''),
-(4, 'BOM-100', 'QuizMaster', '1.1', '101.4', 'IconFinder', '2019', 'commercial', 'released', 'submitted', ''),
-(5, 'BOM-100', 'QuizMaster', '1.1', '101.5', 'Excel', '2019', 'commercial', 'released', 'in_review', ''),
-(6, '101.1', 'DB_Layer', '2.3', '101.1.1', 'DB_Layer_MySQL', 'v1.0', 'internal', 'released', 'released', ''),
-(8, '101.1', 'DB_Layer', '2.3', '101.1.2', 'DB_Layer_DB2', 'v1.0', 'internal', 'released', 'released', ''),
-(10, '101.1', 'DB_Layer', '2.3', '101.1.4', 'DB_Layer_Ingress', 'v1.0', 'internal', 'released', 'released', ''),
-(11, 'BOM-104', 'QuizMaster', '2.2', '202.2', 'DB_Layer', '2.3', 'internal', 'released', 'released', ''),
-(12, 'BOM-104', 'QuizMaster', '2.2', '202.2', 'Jquery', '4.3', 'open source', 'released', 'approved', 'open source, no commercial support'),
-(13, 'BOM-104', 'QuizMaster', '2.2', '202.3', 'Bootstrap', '8.5.c', 'open source', 'released', 'pending', ''),
-(14, 'BOM-104', 'QuizMaster', '2.2', '202.4', 'IconFinder', '2029', 'commercial', 'released', 'submitted', ''),
-(15, 'BOM-104', 'QuizMaster', '2.2', '202.5', 'Excel', '2029', 'commercial', 'released', 'in_review', ''),
-(16, '202.2', 'DB_Layer', '2.3', '202.2.2', 'DB_Layer_Maria', 'v2.0', 'internal', 'released', 'released', ''),
-(17, '202.2', 'DB_Layer', '2.3', '202.2.2', 'DB_Layer_DB2', 'v2.0', 'internal', 'released', 'released', ''),
-(18, '202.2', 'DB_Layer', '2.3', '202.2.3', 'DB_Layer_Oracle', 'v2.0', 'internal', 'released', 'released', ''),
-(19, '202.2', 'DB_Layer', '2.3', '202.2.4', 'DB_Layer_Ingress', 'v2.0', 'internal', 'released', 'released', ''),
-(20, '202.2', 'DB_Layer', '2.3', '202.2.5', 'DB_Layer_MS_SQL', 'v2.0', 'internal', 'released', 'released', '');
+INSERT INTO `sbom` (`row_id`, `app_id`, `app_name`, `app_version`, `cmp_id`, `cmp_name`, `cmp_version`, `cmp_type`, `app_status`, `cmp_status`, `request_id`, `request_date`, `request_status`, `request_step`, `notes`) VALUES
+(1, 'BOM-100', 'QuizMaster', '1.1', '101.1', 'DB_Layer', '2.3', 'internal', 'released', 'released', 'xyz_123_r', '2020-10-01', 'Approved', 'Approval Step', ''),
+(2, 'BOM-100', 'QuizMaster', '1.1', '101.2', 'Jquery', '4.3', 'open source', 'released', 'approved', 'xyz_124_r', '2020-10-01', 'Pending', 'Review Step', 'open source, no commercial support'),
+(3, 'BOM-100', 'QuizMaster', '1.1', '101.3', 'Bootstrap', '8.5.c', 'open source', 'released', 'pending', 'xyz_323_r', '2019-08-01', 'Submitted', 'Review Step', ''),
+(4, 'BOM-100', 'QuizMaster', '1.1', '101.4', 'IconFinder', '2019', 'commercial', 'released', 'submitted', 'xyz_423_r', '2020-10-05', 'Submitted', 'Inspection Step', ''),
+(5, 'BOM-100', 'QuizMaster', '1.1', '101.5', 'Excel', '2019', 'commercial', 'released', 'in_review', 'xyz_163_r', '2020-10-01', 'Approved', 'Approval Step', ''),
+(6, '101.1', 'DB_Layer', '2.3', '101.1.1', 'DB_Layer_MySQL', 'v1.0', 'internal', 'released', 'released', 'xyz_143_r', '2019-08-01', 'Pending', 'Review Step', ''),
+(8, '101.1', 'DB_Layer', '2.3', '101.1.2', 'DB_Layer_DB2', 'v1.0', 'internal', 'released', 'released', 'xyz_1234_r', '2020-10-05', 'Submitted', 'Inspection Step', ''),
+(10, '101.1', 'DB_Layer', '2.3', '101.1.4', 'DB_Layer_Ingress', 'v1.0', 'internal', 'released', 'released', 'xyzff_123_r', '2020-08-01', 'Approved', 'Review Step', ''),
+(11, 'BOM-104', 'QuizMaster', '2.2', '202.2', 'DB_Layer', '2.3', 'internal', 'released', 'released', 'xyz_123_rr', '2020-03-05', 'Pending', 'Approval Step', ''),
+(12, 'BOM-104', 'QuizMaster', '2.2', '202.2', 'Jquery', '4.3', 'open source', 'released', 'approved', 'xyz_123_rrr', '2020-10-01', 'Approved', 'Review Step', 'open source, no commercial support'),
+(13, 'BOM-104', 'QuizMaster', '2.2', '202.3', 'Bootstrap', '8.5.c', 'open source', 'released', 'pending', 'xyz_12345_r', '2019-05-06', 'Submitted', 'Inspection Step', ''),
+(14, 'BOM-104', 'QuizMaster', '2.2', '202.4', 'IconFinder', '2029', 'commercial', 'released', 'submitted', 'xyz_13423_r', '2020-08-01', 'Approved', 'Approval Step', ''),
+(15, 'BOM-104', 'QuizMaster', '2.2', '202.5', 'Excel', '2029', 'commercial', 'released', 'in_review', 'xyz_12453_r', '2019-10-01', 'Pending', 'Inspection Step', ''),
+(16, '202.2', 'DB_Layer', '2.3', '202.2.2', 'DB_Layer_Maria', 'v2.0', 'internal', 'released', 'released', 'xyz_123_rtr', '2020-08-05', 'Approved', 'Review Step', ''),
+(17, '202.2', 'DB_Layer', '2.3', '202.2.2', 'DB_Layer_DB2', 'v2.0', 'internal', 'released', 'released', 'xyz_12ew3_r', '2021-12-01', 'Submitted', 'Approval Step', ''),
+(18, '202.2', 'DB_Layer', '2.3', '202.2.3', 'DB_Layer_Oracle', 'v2.0', 'internal', 'released', 'released', 'xyz_12323_r', '2020-10-25', 'Pending', 'Review Step', ''),
+(19, '202.2', 'DB_Layer', '2.3', '202.2.4', 'DB_Layer_Ingress', 'v2.0', 'internal', 'released', 'released', 'xyz_13123_r', '2021-10-21', 'Approved', 'Review Step', ''),
+(20, '202.2', 'DB_Layer', '2.3', '202.2.5', 'DB_Layer_MS_SQL', 'v2.0', 'internal', 'released', 'released', 'abc_123_r', '2020-11-15', 'Submitted', 'Approval Step', '');
 
 --
 -- Indexes for dumped tables
