@@ -2,7 +2,6 @@
   $nav_selected = "SETUP";
   $left_buttons = "NO";
   $left_selected = "";
-
   include("./nav.php");
   global $db;
  ?>
@@ -19,7 +18,6 @@
     $status = $_GET["release_status"];
     $type = $_GET["release_type"];
     //TODO: error checking (probably shoud conver to  mysqli_multi_query())
-
     $sql1 = "UPDATE preferences p JOIN(
                 SELECT 'min_date' as preference, '$min_date' as new_value
                 UNION ALL
@@ -30,7 +28,6 @@
                 SELECT 'release_type', '$type'
             ) vals on p.preference = vals.preference
             SET value = new_value;";
-
     $db->query($sql1);
     $db->close();
   }
