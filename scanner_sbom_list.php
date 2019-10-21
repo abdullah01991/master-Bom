@@ -1,12 +1,9 @@
 <?php
-
   $nav_selected = "SCANNER"; 
   $left_buttons = "YES"; 
   $left_selected = "SOFTWAREBOM"; 
-
   include("./nav.php");
   global $db;
-
   ?>
 
 
@@ -32,6 +29,10 @@
                         <th>CMP Type</th>
                         <th>App Status</th>
                         <th>CMP Status</th>
+                        <th>Request ID</th>
+                        <th>Request Date</th>
+                        <th>Request Status</th>
+                        <th>Request Step</th>
                         <th>Notes</th>
                 </tr>
               </thead>
@@ -48,6 +49,10 @@
                         <th>CMP Type</th>
                         <th>App Status</th>
                         <th>CMP Status</th>
+                        <th>Request ID</th>
+                        <th>Request Date</th>
+                        <th>Request Status</th>
+                        <th>Request Step</th>
                         <th>Notes</th>
                 </tr>
               </tfoot>
@@ -55,10 +60,8 @@
               <tbody>
 
               <?php
-
 $sql = "SELECT * from sbom ORDER BY row_id ASC;";
 $result = $db->query($sql);
-
                 if ($result->num_rows > 0) {
                     // output data of each row
                     while($row = $result->fetch_assoc()) {
@@ -73,6 +76,10 @@ $result = $db->query($sql);
                                 <td>'.$row["cmp_type"].' </span> </td>
                                 <td>'.$row["app_status"].' </span> </td>
                                 <td>'.$row["cmp_status"].' </span> </td>
+                                <td>'.$row["request_id"].'</td>
+                                <td>'.$row["request_date"].' </span> </td>
+                                <td>'.$row["request_status"].' </span> </td>
+                                <td>'.$row["request_step"].' </span> </td>
                                 <td>'.$row["notes"].' </span> </td>
                             </tr>';
                     }//end while
@@ -80,7 +87,6 @@ $result = $db->query($sql);
                 else {
                     echo "0 results";
                 }//end else
-
                  $result->close();
                 ?>
 
@@ -97,7 +103,6 @@ $result = $db->query($sql);
                 'copy', 'excel', 'csv', 'pdf'
             ] }
         );
-
         $('#info thead tr').clone(true).appendTo( '#info thead' );
         $('#info thead tr:eq(1) th').each( function (i) {
             var title = $(this).text();
@@ -120,7 +125,6 @@ $result = $db->query($sql);
         } );
         
     } );
-
 </script>
 
         
