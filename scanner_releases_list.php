@@ -1,12 +1,9 @@
 <?php
-
   $nav_selected = "SCANNER"; 
   $left_buttons = "YES"; 
   $left_selected = "RELEASESLIST"; 
-
   include("./nav.php");
   global $db;
-
   ?>
 
 
@@ -55,16 +52,14 @@
               <tbody>
 
               <?php
-
 $sql = "SELECT * from releases ORDER BY rtm_date ASC;";
 $result = $db->query($sql);
-
                 if ($result->num_rows > 0) {
                     // output data of each row
                     while($row = $result->fetch_assoc()) {
                         echo '<tr>
                                 <td>'.$row["id"].'</td>
-                                <td>'.$row["name"].' </span> </td>
+                                <td><a href = "./scanner_sbom_tree.php">'.$row["name"].' </span></a> </td>
                                 <td>'.$row["type"].'</td>
                                 <td>'.$row["status"].'</td>
                                 <td>'.$row["open_date"].' </span> </td>
@@ -80,7 +75,6 @@ $result = $db->query($sql);
                 else {
                     echo "0 results";
                 }//end else
-
                  $result->close();
                 ?>
 
@@ -97,7 +91,6 @@ $result = $db->query($sql);
                 'copy', 'excel', 'csv', 'pdf'
             ] }
         );
-
         $('#info thead tr').clone(true).appendTo( '#info thead' );
         $('#info thead tr:eq(1) th').each( function (i) {
             var title = $(this).text();
@@ -120,7 +113,6 @@ $result = $db->query($sql);
         } );
         
     } );
-
 </script>
 
         
