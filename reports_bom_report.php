@@ -1,3 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles/main_style.css" type="text/css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="styles/custom_nav.css" type="text/css">
+        <title>A Basic Composer</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="./mainStyleSheet.css">
+    </head>
+
 <?php
   $nav_selected = "REPORTS";
   $left_buttons = "YES";
@@ -7,6 +28,7 @@
   $cmpStatusChartData = array();
   $requestStatusChartData = array();
   $requestStepChartData = array();
+  
   
   // Query the sbom table and add appropriate data to each of the data arrays.
   $sql = "SELECT * from sbom;";
@@ -215,15 +237,6 @@
 
 </head>
   <div class="container-fluid">
-    <div class="sidebar">
-      <nav class="sidebar-nav">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">BOM Reports</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
     <div id="bomCharts">
       <div  class="row">
         <div id="appStatusChart" class="col-lg-6" style="width: 50%; height: 300px;"></div>
@@ -244,5 +257,8 @@
 <script>
   $(".sidebar").click(function(){
     $("#bomCharts").toggle();
+  });
+  $(document).ready(function(){
+      $("#selectionTable").load("loadChartTable.php");
   });
 </script>
